@@ -12,15 +12,18 @@
 
 <body>
     <header>
-        <div>Blog About It, don't fret about it</div>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/recents">Recents</a></li>
-                <li><a href="/hot-topics">Hot Topics</a> </li>
-            </ul>
+        <nav class="navbar bg-body-tertiary">
+            <div class="contain-fluid hstack gap-3 ">
+                <div class="navbar-brand">Blog About It,</div>
+                <span style="display: inline;">don't fret about it</span>
+                <ul style="display: inline;">
+                    <li class="nav-item" style="display: inline;"><a class="nav-link" href="/recents">Recents</a></li>
+                    <li class="nav-item" style="display: inline;"><a class="nav-link" href="/hot-topics">Hot Topics</a>
+                    </li>
+                </ul>
+                <a id="login" href="/login" class="nav-item">Sign in</a>
+            </div>
         </nav>
-        <a href="/login">Sign in</a>
     </header>
     <script src="/public/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
