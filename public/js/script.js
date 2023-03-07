@@ -3,13 +3,14 @@ var password;
 var submitbutton;
 
 if (window.localStorage.pathname === '/login'){
-    username = $("#username");
-    password = $("#password");
+    username = $("#inputEmail1");
+    password = $("#inputPassword1");
     submitbutton = $("#submit")
     submitbutton.on("click", login())
 }
 
-function login(){
+function login(event){
+    event.preventDefault()
     let UnameVal = username.val()
     let PVal = password.val()
 
@@ -27,4 +28,9 @@ function login(){
         }
        }
     })
+}
+if (window.location.pathname === '/sign-up'){
+    var submitbutton = $("#submit")
+    var loginbutton = $("#login")
+    submitbutton.on("click",)
 }
