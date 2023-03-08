@@ -1,51 +1,51 @@
 const express = require('express');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const path = require('path');
-const fs = require("fs")
-const PORT = process.env.PORT || 3001
+const fs = require("fs");
+const PORT = process.env.PORT || 3001;
 
 //Initiallizing the app varible
 const app = express();
 
 
 //Middleware
-app.use(express.json);
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static('public'));
 
 //Default routes
-app.get('/', (req, res) => {
-    res.sendFile("index.html");
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname,"/public/html/index.html"));
 })
 app.get("/hot-topics", (req, res) => {
-    res.sendFile(path.join(__dirname, "topics.html"));
+    res.sendFile(path.join(__dirname, "/public/html/topics.html"));
 })
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "login.html"))
+    res.sendFile(path.join(__dirname, "/public/html/login.html"));
 })
 //Get route for getting the current users
 app.post("/login/users", (req, res) => {
     fs.readFile("/db/users.json", 'utf-8', async (data) => {
-            var user = data.find(user => user.name === req.body.username)
+            var user = data.find(user => user.name === req.body.username);
             if (user == null){
-                return res.status(401).json("No such user")
+                return res.status(401).json("No such user");
             }
             try {
                 if(await bcrypt.compare(req.body.password, user.password)){
-                    res.status(200)
+                    res.status(200);
                 } else {
-                    res.status(404)
+                    res.status(404);
                 }
             } catch {
-                res.status(500).json("No such user")
+                res.status(500).json("No such user");
             }
         }
     )
 })
 
 app.get("/sign-up", (req, res) => {
-    res.sendFile(path.join(__dirname, "newuser.html"))
+    res.sendFile(path.join(__dirname, "newuser.html"));
 })
 
 app.post("/sign-up", (req, res) => {
