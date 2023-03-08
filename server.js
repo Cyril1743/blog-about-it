@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require("fs");
+const dotenv = require("dotenv").config()
 const PORT = process.env.PORT || 3001;
 
 //Initiallizing the app varible
@@ -11,18 +12,19 @@ const app = express();
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.engine('html', require('ejs').renderFile)
 
 app.use(express.static('public'));
 
 //Default routes
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/html/index.html"));
+    res.render(path.join(__dirname, "/public/html/index.html"));
 })
 app.get("/hot-topics", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/html/topics.html"));
+    res.render(path.join(__dirname, "/public/html/topics.html"));
 })
 app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/html/login.html"));
+    res.render(path.join(__dirname, "/public/html/login.html"));
 })
 //Get route for getting the current users
 app.post("/login/users", (req, res) => {
@@ -47,7 +49,7 @@ app.post("/login/users", (req, res) => {
 })
 
 app.get("/sign-up", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/html/newuser.html"));
+    res.render(path.join(__dirname, "/public/html/newuser.html"));
 })
 
 app.post("/sign-up", (req, res) => {
@@ -73,13 +75,23 @@ app.post("/sign-up", (req, res) => {
 })
 
 app.get("/articles", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/html/articles.html"))
+    res.render(path.join(__dirname, "/public/html/articles.html"))
 })
 app.get("/api/articles", (req, res) => {
-    console.log("Resoponse recieved")
     fs.readFile(path.join(__dirname, "/db/articles.json"), "utf-8", (err, data) => {
         if (err) return res.status(500).json(err)
         res.status(200).json(data)
+    })
+})
+app.get("/api/articles/:id", (req, res) => {
+    fs.readFile(path.join(__dirname, "/db/articles.json"), "utf-8", (err, data) => {
+        if (err) return res.status(500).json(err)
+        var parsedData = JSON.parse(data)
+        parsedData.forEach(element => {
+                if (element.id == req.params.id){
+                    fs.readFile(path.join(__dirname,`/db/articles/${element.name}`), "utf-8", (err, data) => err ? res.status(404) : res.json(data))
+                }
+        });
     })
 })
 app.listen(PORT, () => console.log(`Server started at http://localhost:${PORT}`));
