@@ -16,7 +16,7 @@ app.use(express.static('public'));
 
 //Default routes
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname,"/public/html/index.html"));
+    res.sendFile(path.join(__dirname, "/public/html/index.html"));
 })
 app.get("/hot-topics", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/html/topics.html"));
@@ -26,40 +26,45 @@ app.get("/login", (req, res) => {
 })
 //Get route for getting the current users
 app.post("/login/users", (req, res) => {
-    fs.readFile("/db/users.json", 'utf-8', async (data) => {
-            var user = data.find(user => user.name === req.body.username);
-            if (user == null){
-                return res.status(401).json("No such user");
-            }
-            try {
-                if(await bcrypt.compare(req.body.password, user.password)){
-                    res.status(200);
-                } else {
-                    res.status(404);
-                }
-            } catch {
-                res.status(500).json("No such user");
-            }
+    fs.readFile(path.join(__dirname, "/db/users.json"), 'utf-8', async (err, data) => {
+        if (err) return res.status(404)
+        var parsedData = JSON.parse(data)
+        var user = parsedData.find(user => user.username === req.body.username);
+        if (user == null) {
+            return res.status(401).json("No such user");
         }
+        try {
+            if (await bcrypt.compare(req.body.password, user.password)) {
+                res.status(200).redirect("/account");
+            } else {
+                res.status(404);
+            }
+        } catch {
+            res.status(500).json("No such user");
+        }
+    }
     )
 })
 
 app.get("/sign-up", (req, res) => {
-    res.sendFile(path.join(__dirname, "newuser.html"));
+    res.sendFile(path.join(__dirname, "/public/html/newuser.html"));
 })
 
 app.post("/sign-up", (req, res) => {
-    fs.readFile("/db/users.json", "utf-8", async (data) =>{
+    fs.readFile(path.join(__dirname, "/db/users.json"), "utf-8", async (err, data) => {
+        if (err) return res.status(404).json("Bad request")
         var parsedData = JSON.parse(data)
         var userAvailable = parsedData.find(user => user.name === req.body.username)
-        if (userAvailable !== null) {
+        if (userAvailable) {
             return res.status(403).json("User already exists")
         }
         try {
+            var id = Math.floor(Math.random() * 10000)
             var hashedPassword = await bcrypt.hash(req.body.password, 10)
-            var newUser = {username: req.body.username, password: hashedPassword, id: Math.floor(Math.random * 10000), email: req.body.email}
+            var hashedEmail = await bcrypt.hash(req.body.email, 10)
+            var newUser = { username: req.body.username, password: hashedPassword, id: id, email: hashedEmail }
             parsedData.push(newUser)
-            fs.writeFile("/db/users.json", JSON.stringify(parsedData, null, 4), () => res.redirect("/login"))
+            fs.writeFile(path.join(__dirname, "/db/users.json"), JSON.stringify(parsedData, null, 4), () => res.redirect("/login"))
         } catch {
             res.status(500)
         }
