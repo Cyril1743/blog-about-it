@@ -47,7 +47,10 @@
             </div>
         </nav>
     </header>
-    <form id="login-form" action="/login/users" method="post" class="mx-auto" style="width: 200px;">
+    <form id="login-form" action="/login" method="post" class="mx-auto" style="width: 200px;">
+        <% if (messages.error){%>
+            <%= messages.error %>
+        <% } %>
         <div class="mb-3">
             <label for="inputUsername" class="form-label">Username</label>
             <input type="text" class="form-control" id="inputUsername" pattern="^[a-zA-Z0-9_]+$" maxlength="20"

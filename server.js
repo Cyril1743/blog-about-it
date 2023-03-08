@@ -1,8 +1,14 @@
+//Node modules
 const express = require('express');
-const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require("fs");
+const passport = require("passport")
 const dotenv = require("dotenv").config()
+const flash = require("express-flash")
+const session = require("express-session")
+
+
+//Consts for app set up
 const PORT = process.env.PORT || 3001;
 const login = require("./routes/login");
 const signup = require('./routes/sign-up');
@@ -20,6 +26,14 @@ app.use("/login", login)
 app.use("/sign-up", signup)
 app.use("/topics", topics)
 app.use("/articles", articles)
+app.use(flash())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 app.engine('html', require('ejs').renderFile)
 
 app.use(express.static('public'));
