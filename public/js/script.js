@@ -1,6 +1,6 @@
 
 if (window.location.pathname === "/articles") {
-    fetch("/api/articles")
+    fetch("/articles/api")
         .then((response) => response.json())
         .then((data) => {
             var articleDiv = $("#articles")
@@ -11,7 +11,7 @@ if (window.location.pathname === "/articles") {
                     `<div class="card" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title">${element.title}</h5> \n`
-                fetch(`/api/articles/${element.id}`)
+                fetch(`/articles/api/${element.id}`)
                     .then((response) => response.json())
                     .then((data) => {
                         var dataString = JSON.parse(data)
