@@ -72,5 +72,15 @@ app.post("/sign-up", (req, res) => {
     })
 })
 
+app.get("/articles", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/html/articles.html"))
+})
+app.get("/api/articles", (req, res) => {
+    console.log("Resoponse recieved")
+    fs.readFile(path.join(__dirname, "/db/articles.json"), "utf-8", (err, data) => {
+        if (err) return res.status(500).json(err)
+        res.status(200).json(data)
+    })
+})
 app.listen(PORT, () => console.log(`Server started at http://localhost:${PORT}`));
 
