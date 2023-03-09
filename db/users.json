@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "username": "Cyril15",
+        "password": "$2b$10$eoYy2bkSED2VEwf5piJg8OfuxEb7CLR8HTlKhjRa/ml7qn2Fcbs1K",
+        "id": 8324,
+        "email": "$2b$10$jlVGaLVnrhWg3GBNdH9oHeevWtFG3gupDR65rKKkiJiDwjbvRfumm"
+    },
+    {
+        "username": "w",
+        "password": "$2b$10$ykIB7ZFqU7iKKwVYeKsMCO58dqJex0axQ.ky5JZNvXfb90r6Eb.1G",
+        "id": 9500,
+        "email": "$2b$10$sYuVYZmHiYjVIZOqHZBP5.oYNJGa5UjklhGsn9m6WAM0z0hHKjCjS"
+    }
+]

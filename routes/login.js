@@ -1,55 +1,58 @@
-const login = require("express").Router()
+const express = require("express")
+const login = express.Router()
 const path = require("path")
 const fs = require("fs")
 const bcrypt = require('bcrypt');
-const passport = require('passport')
-const init = require("../passport-cofig")
 const flash = require("express-flash")
-const session = require("express-session")
-
-init(passport, (username) => {
-    fs.readFile(path.join(__dirname, "/db/users.json"), "utf-8", (err, data) => {
-        if (err) return err
-        var parsedData = JSON.parse(data)
-        return user = parsedData.find(user => user.username === username)
-    })
-}, (id) => {
-    fs.readFile(path.join(__dirname,"/db/users.json"), "utf-8", (err, data) => {
-        if (err) return err
-        var parsedData = JSON.parse(data)
-        return userId = parsedData.find(user => user.id === id)
-    })
-})
+const session = require("express-session");
 
 login.use(flash())
 login.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: false
+    }
 }))
-login.use(passport.initialize())
-login.use(passport.session())
+login.use(express.urlencoded({ extended: false }))
 
 login.get("/", (req, res) => {
     res.render(path.join(__dirname, "../public/html/login.html"));
 })
 
-login.get("/account", checkAuth, (req, res)=> {
-    res.render(path.join(__dirname,"../public/html/account.html"))
+login.get("/account", (req, res) => {
+    if (req.session.user) res.render(path.join(__dirname, "../public/html/account.html"), { name: req.session.user })
+    else res.render(path.join(__dirname, "../public/html/login.html"), { error: "Must be logged in to view website" })
 })
 //Get route for getting the current users
-login.post("/", passport.authenticate('local', {
-    successRedirect: '/account',
-    failureRedirect: '/login',
-    failureFlash: true
-}))
+login.post("/", (req, res) => {
+    fs.readFile(path.join(__dirname, "../db/users.json"), "utf-8", async (err, data) => {
+        if (err) return res.status(500).flash("error", err)
+        var parsedData = JSON.parse(data)
+        for (let i = 0; i < parsedData.length; i++) {
+            if (parsedData[i].username === req.body[0].username) {
+                console.log(parsedData[i].password, req.body[0].password)
+                if ( await bcrypt.compare(req.body[0].password, parsedData[i].password)) {
+                    return res.status(404), req.flash('error', "Invalid password")
+                } else {
+                req.session.regenerate((err) => {
+                    if (err) next(err)
+                    req.session.user = req.body[0].username
+                    req.session.save((err) => {
+                        if (err) next(err)
+                        res.redirect("/login/account")
+                    })
 
-function checkAuth(req, res, next) {
-    if (req.isAuthenticated()){
-        return next()
-    } else {
-        res.redirect("/login")
-    }
-}
+                })}
+            } else {
+                res.status(404)
+                req.flash("error", "Invalid password")
+            }
+        }
+
+    })
+
+})
 
 module.exports = login
