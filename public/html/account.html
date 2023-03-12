@@ -44,7 +44,17 @@
             </div>
         </nav>
     </header>
-    <h1>Welcome <%= name %></h1>
+        <h1 class=>Welcome <%= messages.name %></h1>
+    <!-- TODO: Implement some sort of form to submit a post to "/articles"-->
+    <h2 class="mx-auto">Post Something</h2>
+    <form action="/articles" method="post" class="mx-auto" style="width: 200px;">
+        <label for="title">Title:</label>
+        <input type="text" name="title" placeholder="What's on your mind?" id="title">
+        <textarea rows="5" cols="50" name="text"></textarea>
+    </form>
+    <!-- TODO: Implement some sort of log out button to call a delete to "/login/:username"-->
+    <button class="btn btn-danger" type="submit" id="logout">Log-out</button>
+    <!-- TODO: Implement a way to view all the articles user has submitted "/articles/api/:username"-->
     <script src="../js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>

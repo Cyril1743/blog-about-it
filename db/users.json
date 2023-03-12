@@ -1,20 +1,8 @@
 [
     {
         "username": "Cyril15",
-        "password": "$2b$10$eoYy2bkSED2VEwf5piJg8OfuxEb7CLR8HTlKhjRa/ml7qn2Fcbs1K",
-        "id": 8324,
-        "email": "$2b$10$jlVGaLVnrhWg3GBNdH9oHeevWtFG3gupDR65rKKkiJiDwjbvRfumm"
-    },
-    {
-        "username": "w",
-        "password": "$2b$10$ykIB7ZFqU7iKKwVYeKsMCO58dqJex0axQ.ky5JZNvXfb90r6Eb.1G",
-        "id": 9500,
-        "email": "$2b$10$sYuVYZmHiYjVIZOqHZBP5.oYNJGa5UjklhGsn9m6WAM0z0hHKjCjS"
-    },
-    {
-        "username": "No_Gift_9616",
-        "password": "$2b$10$y/ksYwPSdEN4mFulYwWdguNEvdJpyajivlYFmLiugoCzX8t3HoOUy",
-        "id": 6865,
-        "email": "$2b$10$xYap5c07jiNo6Af4ywGABuu8b6W2a2eTXSZqGrlOU///XasMIx1ji"
+        "password": "$2b$10$YyqLyThv1g3zY3qlkqPRyukhZVXq7.K8b2zayer9kzAb5o7XSu5bG",
+        "id": 9134,
+        "email": "$2b$10$5J4i0ri6eMjWtXlltwYiQu/MAKHinRV/Ccm0WOvtqVWaapbsNhPQC"
     }
 ]
