@@ -1,7 +1,14 @@
-[{
-    "name": "test.txt",
-    "id": 1028428,
-    "title": "Lorem Ipsum",
-    "tags": ["test", "css", "html", "javascript"],
-    "user": "test"
-}]
+[
+    {
+        "name": "test.txt",
+        "id": 1028428,
+        "title": "Lorem Ipsum",
+        "tags": [
+            "test",
+            "css",
+            "html",
+            "javascript"
+        ],
+        "user": "test"
+    }
+]

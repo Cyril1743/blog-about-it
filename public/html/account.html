@@ -44,23 +44,28 @@
             </div>
         </nav>
     </header>
-        <h1 class=>Welcome <%= messages.name %></h1>
-    <!-- TODO: Implement some sort of form to submit a post to "/articles"-->
+        <h1 id="welcome">Welcome <%= messages.name %></h1>
+    <!-- Form to submit a post to "/articles"-->
     <h2 class="mx-auto">Post Something</h2>
-    <form action="/articles" method="post" class="mx-auto" style="width: 200px;">
+    <form class="mx-auto" style="width: 200px;">
         <label for="title">Title:</label>
-        <input type="text" name="title" placeholder="What's on your mind?" id="title">
-        <textarea rows="5" cols="50" name="text"></textarea>
+        <input type="text" name="title" placeholder="What's on your mind?" id="title" required>
+        <textarea rows="5" cols="50" name="text" required></textarea>
+        <label for="tags" id="taglabel">Tags:</label>
+        <input class="form-check-input" type="checkbox" name="other" value="other">Other:
+    <input type="text" name="tag-other" size="14">
+        <button type="submit" class="btn btn-primary" id="submit"> Post </button>
     </form>
-    <!-- TODO: Implement some sort of log out button to call a delete to "/login/:username"-->
+    <!--log out button to call a delete to "/logout"-->
     <button class="btn btn-danger" type="submit" id="logout">Log-out</button>
     <!-- TODO: Implement a way to view all the articles user has submitted "/articles/api/:username"-->
-    <script src="../js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+    <script src="../js/account.js"></script>
 </body>
 
 </html>

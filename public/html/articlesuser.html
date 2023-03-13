@@ -49,27 +49,14 @@
             </div>
         </nav>
     </header>
-    <form id="login-form" action="/login" method="post" class="mx-auto" style="width: 200px;">
-        <% if (messages.error){%>
-            <%= messages.error %>
-        <% } %>
-        <div class="mb-3">
-            <label for="inputUsername" class="form-label">Username</label>
-            <input type="text" class="form-control" id="inputUsername" pattern="^[a-zA-Z0-9_]+$" maxlength="20"
-                name="username">
-        </div>
-        <div class="mb-3">
-            <label for="inputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="inputPassword1" pattern="^[a-zA-Z0-9_]+$" maxlength="20"
-                name="password">
-            <button type="submit" class="btn btn-primary">Login</button>
-            <a style="display: block;" href="/sign-up">Sign up instead</a>
-    </form>
+    <h1>Articles By User:</h1>
+    <div id="articles"></div>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+    <script src="../js/articlesuser.js"></script>
 </body>
 
 </html>
